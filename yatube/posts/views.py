@@ -51,7 +51,7 @@ def profile(request, username):
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     posts_count = post.author.posts.count()
-    form = CommentForm(request.POST or None)
+    form = CommentForm()
     comments = post.comments.all()
     context = {
         'post': post,
@@ -102,7 +102,7 @@ def post_edit(request, post_id):
 def add_comment(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     # Получите пост и сохраните его в переменную post.
-    form = CommentForm()
+    form = CommentForm(request.POST or None)
     if form.is_valid():
         comment = form.save(commit=False)
         comment.author = request.user
